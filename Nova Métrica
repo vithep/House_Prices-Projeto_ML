@@ -1,0 +1,15 @@
+def acc_reg(y_pred,y_test,tolerancia):
+    
+    df_final = pd.DataFrame({'Actual': y_test, 'Predicted': y_pred})
+    
+    df_final['error']=1-df_final['Predicted']/df_final['Actual']
+    
+    ((df_final['error']<tolerancia) & (df_final['error']>-tolerancia)).value_counts()
+    
+    Falso = ((df_final['error']<tolerancia) & (df_final['error']>-tolerancia)).value_counts()[0]
+    
+    Verdadeiro = ((df_final['error']<tolerancia) & (df_final['error']>-tolerancia)).value_counts()[1]
+    
+    Acc = Verdadeiro/(Falso+Verdadeiro)*100
+    
+    return round(Acc,2)
